@@ -7,6 +7,7 @@ export const baseApi = createApi({
   endpoints: (builder) => ({
     getProductQuery: builder.query({
       query: (payload) => {
+        const params = new URLSearchParams();
         let url;
 
         if (payload) {
@@ -17,9 +18,11 @@ export const baseApi = createApi({
           }
         }
 
+        params.append("sort", payload.sort);
         return {
           url: url ? url : "",
           method: "GET",
+          params: params,
         };
       },
     }),

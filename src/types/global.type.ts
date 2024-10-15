@@ -27,4 +27,5 @@ export type TProductState = {
   parsedProduct: TProductWithQuantity[] | null;
   quantity: number;
   category: string;
+  sort: string;
 };

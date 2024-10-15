@@ -16,7 +16,7 @@ const TableBodyData: React.FC<TTableBodyProps> = ({ item }) => {
 
   return (
     <tr className="border-b">
-      <td className="py-3 flex items-center">
+      <td className="py-3 flex items-center pl-5">
         <img
           src={item.product.image}
           alt={item.product.title}
@@ -24,8 +24,8 @@ const TableBodyData: React.FC<TTableBodyProps> = ({ item }) => {
         />
         <span>{item.product.title}</span>
       </td>
-      <td className="py-3">${item.product.price}</td>
-      <td className="py-3 flex items-center">
+      <td className="py-3 pl-4">${item.product.price}</td>
+      <td className="py-3 flex items-center pl-4">
         <button
           disabled={item.quantity <= 1}
           onClick={() => dispatch(decreaseQuantity(item.product.id))}
@@ -46,13 +46,15 @@ const TableBodyData: React.FC<TTableBodyProps> = ({ item }) => {
           +
         </button>
       </td>
-      <td className="py-3">${Number(item?.quantity) * item.product.price}</td>
-      <td className="py-3 flex items-center">
+      <td className="py-3 pl-4">
+        ${Number(item?.quantity) * item.product.price}
+      </td>
+      <td className="py-3 flex items-center pl-5">
         <button
           onClick={() => dispatch(removeProductFromCart(item.product.id))}
           className="text-red-500 hover:text-red-600"
         >
-          <IoMdCloseCircle className="text-4xl" />
+          <IoMdCloseCircle className="text-3xl" />
         </button>
       </td>
     </tr>

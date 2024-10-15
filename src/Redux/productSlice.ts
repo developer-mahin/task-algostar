@@ -11,6 +11,7 @@ const initialState: TProductState = {
   parsedProduct: [] as TProductWithQuantity[] | null,
   quantity: 0,
   category: "All",
+  sort: "asc",
 };
 
 const productSlice = createSlice({
@@ -43,6 +44,9 @@ const productSlice = createSlice({
       );
 
       setIntoLocalStorage("cart", findItem);
+
+      state.cart = findItem;
+      toast.success("Product removed from cart");
     },
 
     setQuantity: (state, action) => {
@@ -86,6 +90,10 @@ const productSlice = createSlice({
     setCategory: (state, action) => {
       state.category = action.payload;
     },
+
+    setSort: (state, action) => {
+      state.sort = action.payload;
+    },
   },
 });
 
@@ -96,5 +104,6 @@ export const {
   setQuantity,
   decreaseQuantity,
   setCategory,
+  setSort,
 } = productSlice.actions;
 export default productSlice.reducer;

@@ -24,7 +24,7 @@ const ProductCard: React.FC<TProductCard> = ({ singleProduct }) => {
     >
       <div className="">
         <img
-          className="w-full h-80 p-3"
+          className="w-full h-60 p-3"
           src={singleProduct.image}
           alt={singleProduct.title}
         />

@@ -1,24 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { HiMenuAlt2, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../Redux/hook";
+import useParsedProducts from "../../hook/useParseProduct";
 import { TNavItems } from "../../types";
 import Container from "../Shared/Container";
 import NavItem from "./NavItem";
 import { navItems } from "./navItems";
-import { setParsedProduct } from "../../Redux/productSlice";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
-  const { parsedProduct } = useAppSelector((state) => state.product);
-  const cart = localStorage.getItem("cart");
-
-  useEffect(() => {
-    if (cart) {
-      dispatch(setParsedProduct(JSON.parse(cart)));
-    }
-  }, [cart, dispatch]);
+  const { parsedProduct } = useParsedProducts();
 
   return (
     <header className="z-[999] bg-[#EAE8E8] py-[18px] px-5 border-b-2 border-[rgb(20 136 162)] shadow-md sticky top-0">
