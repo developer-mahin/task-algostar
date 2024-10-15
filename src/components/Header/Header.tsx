@@ -21,7 +21,7 @@ const Header = () => {
   }, [cart, dispatch]);
 
   return (
-    <header className=" bg-[#EAE8E8] py-[18px] px-5 border-b-2 border-[rgb(20 136 162)] shadow-md sticky top-0">
+    <header className="z-[999] bg-[#EAE8E8] py-[18px] px-5 border-b-2 border-[rgb(20 136 162)] shadow-md sticky top-0">
       <Container>
         <nav className="lg:grid flex items-center justify-between grid-cols-3  relative">
           <div className="flex items-center">

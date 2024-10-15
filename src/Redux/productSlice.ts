@@ -10,6 +10,7 @@ const initialState: TProductState = {
   cart: JSON.parse(localStorage.getItem("cart") as string) || [],
   parsedProduct: [] as TProductWithQuantity[] | null,
   quantity: 0,
+  category: "All",
 };
 
 const productSlice = createSlice({
@@ -81,6 +82,10 @@ const productSlice = createSlice({
         );
       }
     },
+
+    setCategory: (state, action) => {
+      state.category = action.payload;
+    },
   },
 });
 
@@ -90,5 +95,6 @@ export const {
   removeProductFromCart,
   setQuantity,
   decreaseQuantity,
+  setCategory,
 } = productSlice.actions;
 export default productSlice.reducer;

@@ -26,4 +26,5 @@ export type TProductState = {
   cart: TProductWithQuantity[] | null;
   parsedProduct: TProductWithQuantity[] | null;
   quantity: number;
+  category: string;
 };

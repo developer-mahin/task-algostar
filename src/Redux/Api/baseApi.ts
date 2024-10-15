@@ -6,9 +6,28 @@ export const baseApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "https://fakestoreapi.com/products" }),
   endpoints: (builder) => ({
     getProductQuery: builder.query({
+      query: (payload) => {
+        let url;
+
+        if (payload) {
+          if (payload.category === "All") {
+            url = "";
+          } else {
+            url = `/category/${payload.category}`;
+          }
+        }
+
+        return {
+          url: url ? url : "",
+          method: "GET",
+        };
+      },
+    }),
+
+    getAllCategories: builder.query({
       query: () => {
         return {
-          url: "",
+          url: "/categories",
           method: "GET",
         };
       },
@@ -16,4 +35,4 @@ export const baseApi = createApi({
   }),
 });
 
-export const { useGetProductQueryQuery } = baseApi;
+export const { useGetProductQueryQuery, useGetAllCategoriesQuery } = baseApi;
