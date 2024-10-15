@@ -2,18 +2,17 @@ import { useEffect, useState } from "react";
 import { HiMenuAlt2, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../Redux/hook";
-import { setParsedProduct } from "../../Redux/productSlice";
 import { TNavItems } from "../../types";
 import Container from "../Shared/Container";
 import NavItem from "./NavItem";
 import { navItems } from "./navItems";
+import { setParsedProduct } from "../../Redux/productSlice";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const { parsedProduct } = useAppSelector((state) => state.product);
   const cart = localStorage.getItem("cart");
-
 
   useEffect(() => {
     if (cart) {

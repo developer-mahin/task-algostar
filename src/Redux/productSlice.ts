@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { toast } from "sonner";
 import { TProductState, TProductWithQuantity } from "../types";
+import {
+  getFromLocalStorage,
+  setIntoLocalStorage,
+} from "../utils/localStorage";
 
 const initialState: TProductState = {
   cart: JSON.parse(localStorage.getItem("cart") as string) || [],
@@ -30,37 +34,61 @@ const productSlice = createSlice({
       state.parsedProduct = action.payload;
     },
 
-    setQuantity: (state, action) => {
-      const cart = localStorage.getItem("cart");
-      let parseCart;
-      if (cart) {
-        parseCart = JSON.parse(cart);
-      }
+    removeProductFromCart: (state, action) => {
+      const data = getFromLocalStorage("cart");
 
-      const productIndex = parseCart.findIndex(
+      const findItem = data.filter(
+        (item: TProductWithQuantity) => item.product.id !== action.payload
+      );
+
+      setIntoLocalStorage("cart", findItem);
+    },
+
+    setQuantity: (state, action) => {
+      const cart = getFromLocalStorage("cart");
+
+      const productIndex = cart.findIndex(
         (item: TProductWithQuantity) => item.product.id === action.payload
       );
 
       if (productIndex !== -1) {
-        parseCart[productIndex].quantity += 1;
-        state.cart = parseCart;
+        cart[productIndex].quantity += 1;
+        state.cart = cart;
 
-        localStorage.setItem("cart", JSON.stringify(parseCart));
+        setIntoLocalStorage("cart", cart);
 
         toast.success(
-          `Updated quantity for ${parseCart[productIndex].product.title}`
+          `Updated quantity for ${cart[productIndex].product.title}`
         );
       }
     },
 
+    decreaseQuantity: (state, action) => {
+      const cart = getFromLocalStorage("cart");
 
+      const productIndex = cart.findIndex(
+        (item: TProductWithQuantity) => item.product.id === action.payload
+      );
+
+      if (productIndex !== -1) {
+        cart[productIndex].quantity -= 1;
+        state.cart = cart;
+
+        setIntoLocalStorage("cart", cart);
+
+        toast.success(
+          `Updated quantity for ${cart[productIndex].product.title}`
+        );
+      }
+    },
   },
 });
 
 export const {
   setProductInCart,
   setParsedProduct,
+  removeProductFromCart,
   setQuantity,
-  
+  decreaseQuantity,
 } = productSlice.actions;
 export default productSlice.reducer;
