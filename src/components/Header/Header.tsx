@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import { HiMenuAlt2, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { TNavItems, TProduct } from "../../types";
+import { useAppDispatch, useAppSelector } from "../../Redux/hook";
+import { setParsedProduct } from "../../Redux/productSlice";
+import { TNavItems } from "../../types";
 import Container from "../Shared/Container";
 import NavItem from "./NavItem";
 import { navItems } from "./navItems";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [parseData, setParseData] = useState<TProduct[]>([]);
+  const dispatch = useAppDispatch();
+  const { parsedProduct } = useAppSelector((state) => state.product);
   const cart = localStorage.getItem("cart");
+
 
   useEffect(() => {
     if (cart) {
-      setParseData(JSON.parse(cart));
+      dispatch(setParsedProduct(JSON.parse(cart)));
     }
-  }, [cart, parseData]);
+  }, [cart, dispatch]);
 
   return (
     <header className=" bg-[#EAE8E8] py-[18px] px-5 border-b-2 border-[rgb(20 136 162)] shadow-md sticky top-0">
@@ -92,8 +96,10 @@ const Header = () => {
                 </div>
 
                 <div className="absolute -top-3 -right-2 size-5 rounded-full bg-gray-500 flex items-center justify-center">
-                  {parseData.length > 0 && (
-                    <p className="text-white font-medium">{parseData.length}</p>
+                  {parsedProduct?.length && parsedProduct?.length > 0 && (
+                    <p className="text-white font-medium">
+                      {parsedProduct?.length}
+                    </p>
                   )}
                 </div>
               </div>
