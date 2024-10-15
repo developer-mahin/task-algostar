@@ -1,16 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HiMenuAlt2, HiX } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import { TNavItems } from "../../types";
-import { navItems } from "./navItems";
-import NavItem from "./NavItem";
+import { TNavItems, TProduct } from "../../types";
 import Container from "../Shared/Container";
+import NavItem from "./NavItem";
+import { navItems } from "./navItems";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [parseData, setParseData] = useState<TProduct[]>([]);
+  const cart = localStorage.getItem("cart");
+
+  useEffect(() => {
+    if (cart) {
+      setParseData(JSON.parse(cart));
+    }
+  }, [cart, parseData]);
 
   return (
-    <header className=" bg-[#EAE8E8] py-[18px] px-5 border-b-2 border-gray-300/80 shadow-md">
+    <header className=" bg-[#EAE8E8] py-[18px] px-5 border-b-2 border-[rgb(20 136 162)] shadow-md sticky top-0">
       <Container>
         <nav className="lg:grid flex items-center justify-between grid-cols-3  relative">
           <div className="flex items-center">
@@ -63,25 +71,33 @@ const Header = () => {
                 </Link>
               </li>
             </ul>
-            <div className="flex items-center gap-2">
-              <Link to="/cart" className=" text-black lg:block hidden">
-                Cart
-              </Link>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="cart-svg w-5 h-5"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
-                />
-              </svg>
-            </div>
+            <Link to="/cart" className="flex items-center gap-2">
+              <div className=" hover:text-yellow-500 lg:block hidden">Cart</div>
+              <div className="relative">
+                <div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="cart-svg size-6 hover:text-yellow-500"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                    />
+                  </svg>
+                </div>
+
+                <div className="absolute -top-3 -right-2 size-5 rounded-full bg-gray-500 flex items-center justify-center">
+                  {parseData.length > 0 && (
+                    <p className="text-white font-medium">{parseData.length}</p>
+                  )}
+                </div>
+              </div>
+            </Link>
           </div>
         </nav>
       </Container>

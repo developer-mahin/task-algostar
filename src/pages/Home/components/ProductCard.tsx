@@ -1,13 +1,20 @@
 import React, { useState } from "react";
+import { FaEye, FaHeart, FaShoppingCart } from "react-icons/fa";
+import { useAppDispatch } from "../../../Redux/hook";
+import { setProductInCart } from "../../../Redux/productSlice";
 import { TProduct } from "../../../types";
-import { FaHeart, FaShoppingCart, FaEllipsisH } from "react-icons/fa";
 
 type TProductCard = {
-  product: TProduct;
+  singleProduct: TProduct;
 };
 
-const ProductCard: React.FC<TProductCard> = ({ product }) => {
+const ProductCard: React.FC<TProductCard> = ({ singleProduct }) => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
+  const handleAddToCart = (product: TProduct) => {
+    dispatch(setProductInCart(product));
+  };
 
   return (
     <div
@@ -17,9 +24,9 @@ const ProductCard: React.FC<TProductCard> = ({ product }) => {
     >
       <div className="">
         <img
-          className="w-full h-80 object-cover p-3"
-          src={product.image}
-          alt={product.title}
+          className="w-full h-80 p-3"
+          src={singleProduct.image}
+          alt={singleProduct.title}
         />
 
         {/* Overlay Options */}
@@ -28,11 +35,14 @@ const ProductCard: React.FC<TProductCard> = ({ product }) => {
             <button className="text-white text-2xl hover:text-yellow-400">
               <FaHeart />
             </button>
-            <button className="text-white text-2xl hover:text-yellow-400">
+            <button
+              onClick={() => handleAddToCart(singleProduct)}
+              className="text-white text-2xl hover:text-yellow-400"
+            >
               <FaShoppingCart />
             </button>
             <button className="text-white text-2xl hover:text-yellow-400">
-              <FaEllipsisH />
+              <FaEye />
             </button>
           </div>
         )}
@@ -40,15 +50,15 @@ const ProductCard: React.FC<TProductCard> = ({ product }) => {
 
       <div className="p-5">
         <p className="w-fit capitalize px-4 py-1 bg-[#00000090] text-white rounded">
-          {product.category}
+          {singleProduct.category}
         </p>
         <h3 className="text-gray-700 font-semibold text-lg mb-2">
-          {product.title.slice(0, 50) + "..."}
+          {singleProduct.title.slice(0, 50) + "..."}
         </h3>
 
         <div className="flex justify-between items-center">
           <span className="text-gray-900 font-bold text-xl">
-            ${product.price}
+            ${singleProduct.price}
           </span>
         </div>
       </div>

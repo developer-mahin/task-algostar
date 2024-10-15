@@ -13,11 +13,12 @@ const Products = () => {
 
   return (
     <Container className="py-20">
-        
-      <div className="grid grid-cols-4 gap-6">
-        {AllProducts.map((product: TProduct, i: number) => {
-          return <ProductCard product={product} key={i} />;
-        })}
+      <div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-6">
+          {AllProducts.map((product: TProduct, i: number) => {
+            return <ProductCard singleProduct={product} key={i} />;
+          })}
+        </div>
       </div>
     </Container>
   );

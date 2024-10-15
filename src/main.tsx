@@ -5,11 +5,13 @@ import { RouterProvider } from "react-router-dom";
 import "./index.css";
 import { store } from "./Redux/store.ts";
 import { router } from "./routes/router.tsx";
+import { Toaster } from "sonner";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
       <RouterProvider router={router} />
+      <Toaster/>
     </Provider>
   </StrictMode>
 );
